@@ -45,7 +45,7 @@ class Network {
 
     final FirebaseUser user =
         await FirebaseAuth.instance.signInWithCredential(credential);
-
+    _user = user;
     //user created successfully
     //send to server
 
@@ -58,6 +58,7 @@ class Network {
     print("sent post to server");
     print("===========================");
     print("===========================");
+      print(serverResponse.statusCode);
 
     if (serverResponse.statusCode == 200) {
       return true;

@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mate/constants.dart';
+import 'package:flutter_mate/start_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_mate/network.dart';
 import 'package:flutter_mate/profile.dart';
 
-void main() => runApp(Profile());
+void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String message = "---";
   StreamSubscription _subs;
+  final navKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -49,9 +51,15 @@ class _MyAppState extends State<MyApp> {
     bool p = await Network().loginWithGitHub(code);
 
     if (p) {
-
+      navKey.currentState.pushReplacementNamed("/profile");
     } else {
-
+      showDialog(
+          context: navKey.currentState.context,
+          builder: (context) {
+            return AlertDialog(
+                content: Text("Some Server Error Occured, Please Try Again"));
+          });
+      print("Server Error");
     }
   }
 
@@ -66,34 +74,15 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navKey,
       title: 'FlutterMate',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Github Login'),
-                RaisedButton(
-                  child: Text("Login"),
-                  onPressed: () async {
-                    if (await canLaunch(url)) {
-                      await launch(
-                        url,
-                        forceSafariVC: false,
-                        forceWebView: false,
-                      );
-                    } else {
-                      print("CANNOT LAUNCH THIS URL!");
-                    }
-                  },
-                ),
-                Text(message),
-              ],
-            )),
-      ),
+      routes: {
+        '/': (context) => StartScreen(),
+        '/profile': (context) => Profile(),
+      },
     );
   }
 }
