@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter_mate/constants.dart';
 import 'package:flutter_mate/github-model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
