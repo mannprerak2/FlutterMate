@@ -54,6 +54,7 @@ app.addHook('preHandler', async (request, reply, next) => {
     }
 });
 
+// Util function to generate user score on basis of Flutter repos
 const generateFScore = async (uid, ghId) => {
     let result = await axios.get(`https://api.github.com/user/${ghId}/repos`);
     result = result.data.filter(
@@ -85,6 +86,7 @@ app.get('/', async (request, res) => {
     }
 });
 
+// Route to handle signup of user
 app.post('/signup', async (req, res) => {
     const data = req.decoded;
     const uid = data.user_id;
@@ -143,6 +145,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+// Util function to calculate compatibility score of two users
 const getCompatibilityScore = (yourScore, myScore) => {
     let temp = (yourScore - myScore) / myScore;
     temp = 1 / temp;
@@ -151,44 +154,53 @@ const getCompatibilityScore = (yourScore, myScore) => {
     return temp;
 }
 
+// Util function to get data
+const getData = async (userScore, uid) => {
+    let result = [];
+    const first = await userCollection.where('score', '>=', userScore).limit(3);    
+    const second = await userCollection.where('score', '<=', userScore).limit(3);
+
+    return new Promise(
+        async (resolve, reject) => {
+            const firstSnap = await first.get();
+            await firstSnap.forEach(
+                doc => {
+                    if (doc.id !== uid) {
+                        result.push(doc.data());
+                        result[result.length - 1]['compatibilty'] = getCompatibilityScore(doc.data().score, userScore);
+                    }
+                }
+            );
+            resolve(result)
+        }
+    ).then(
+        async result => {
+            const secondSnap = await second.get();
+            await secondSnap.forEach(
+                doc => {
+                    if (doc.id !== uid) {
+                        result.push(doc.data());
+                        result[result.length - 1]['compatibilty'] = getCompatibilityScore(doc.data().score, userScore);
+                    }
+                }
+            );
+            return result;
+        }
+    ).then(
+        result => result
+    );
+}
+
 app.get('/team', async (req, res) => {
     const data = req.decoded;
     const uid = data.user_id;
-    const result = [];
 
     const foundUser = await userCollection.doc(`${uid}`).get();
     if (!foundUser.exists) {
         console.log(foundUser.data());
         return res.code(403);
     } else {
-        const first = await userCollection.where('score', '>=', foundUser.data().score).limit(5);    
-        const second = await userCollection.where('score', '<=', foundUser.data().score).limit(5);
-        
-        const firstSnap = await first.get();
-        await firstSnap.forEach(
-            doc => {
-                if (doc.id !== uid) {
-                    console.log(doc.id, doc.data());
-                    result[doc.id] = {
-                        ...doc.data(),
-                    }
-                    result['compatibilty'] = getCompatibilityScore(doc.data().score, foundUser.data().score);
-                }
-            }
-        );
-        const secondSnap = await second.get();
-        await secondSnap.forEach(
-            doc => {
-                if (doc.id !== uid) {
-                    console.log(doc.id, doc.data());
-                    result[doc.id] = {
-                        ...doc.data(),
-                    }
-                    result['compatibilty'] = getCompatibilityScore(doc.data().score, foundUser.data().score);
-                }
-            }
-        );
-        console.log(result);
+        return await getData(foundUser.data().score, uid);
     }
 });
 
