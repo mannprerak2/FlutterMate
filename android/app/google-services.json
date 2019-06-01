@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "457120535122",
+    "firebase_url": "https://fluttermate.firebaseio.com",
+    "project_id": "fluttermate",
+    "storage_bucket": "fluttermate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457120535122:android:01fd2b05bbfe4e2b",
+        "android_client_info": {
+          "package_name": "com.example.flutter_mate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457120535122-gme3uf7v2fed268h73k2a99sk8p4nvlv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZDOxkij8iC7w_mmnGIPB63JOJp2eMuJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457120535122-gme3uf7v2fed268h73k2a99sk8p4nvlv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
