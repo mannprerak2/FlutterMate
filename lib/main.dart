@@ -9,7 +9,7 @@ import 'package:flutter_mate/profile.dart';
 
 void main() => runApp(Profile());
 
-/*class MyApp extends StatefulWidget {
+class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -40,12 +40,18 @@ class _MyAppState extends State<MyApp> {
   void _checkDeepLink(String link) {
     if (link != null) {
       String code = link.substring(link.indexOf(RegExp('code=')) + 5);
-      Network().loginWithGitHub(code).then((firebaseUser) {
-        print("LOGGED IN AS: " + firebaseUser.displayName);
 
-      }).catchError((e) {
-        print("LOGIN ERROR: " + e.toString());
-      });
+      proceedToProfile(code);
+    }
+  }
+
+  void proceedToProfile(String code) async {
+    bool p = await Network().loginWithGitHub(code);
+
+    if (p) {
+
+    } else {
+
     }
   }
 
@@ -67,27 +73,27 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         body: Center(
             child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text('Github Login'),
-            RaisedButton(
-              child: Text("Login"),
-              onPressed: () async {
-                if (await canLaunch(url)) {
-                  await launch(
-                    url,
-                    forceSafariVC: false,
-                    forceWebView: false,
-                  );
-                } else {
-                  print("CANNOT LAUNCH THIS URL!");
-                }
-              },
-            ),
-            Text(message),
-          ],
-        )),
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Github Login'),
+                RaisedButton(
+                  child: Text("Login"),
+                  onPressed: () async {
+                    if (await canLaunch(url)) {
+                      await launch(
+                        url,
+                        forceSafariVC: false,
+                        forceWebView: false,
+                      );
+                    } else {
+                      print("CANNOT LAUNCH THIS URL!");
+                    }
+                  },
+                ),
+                Text(message),
+              ],
+            )),
       ),
     );
   }
-}*/
+}
