@@ -138,6 +138,7 @@ class _ProfileState extends State<Profile> {
                                         children: <Widget>[
                                           Text("Repos: "),
                                           Text(snapshot.data['repos'].toString(), style: aboutStyle,),
+
                                         ],
                                       ),
                                     ),

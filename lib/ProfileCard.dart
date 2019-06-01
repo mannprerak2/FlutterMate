@@ -3,6 +3,7 @@ import 'package:flutter_mate/network.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_mate/usermodel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 TextStyle nameStyle =
     TextStyle(color: Colors.purple[700], fontSize: 28.0, fontFamily: 'Oxygen');
@@ -57,10 +58,17 @@ class ProfileCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 24.0, horizontal: 8.0),
-                      child: Text(
-                        snapshot.data['username'],
-                        style: nameStyle,
-                        overflow: TextOverflow.fade,
+                      child: InkWell(
+                        child: Text(
+                          snapshot.data['name'],
+                          style: nameStyle,
+                          overflow: TextOverflow.fade,
+                        ),
+                        onTap: () async {
+                          if (await canLaunch("https://github.com/" + snapshot.data['username'])) {
+                            await launch("https://github.com/" + snapshot.data['username']);
+                          }
+                        },
                       ),
                     ),
                     Padding(
