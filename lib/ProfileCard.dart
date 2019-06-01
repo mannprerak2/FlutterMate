@@ -3,6 +3,7 @@ import 'package:flutter_mate/network.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_mate/usermodel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 TextStyle nameStyle =
     TextStyle(color: Colors.purple[700], fontSize: 28.0, fontFamily: 'Oxygen');
@@ -11,7 +12,8 @@ TextStyle usernameStyle =
 TextStyle aboutStyle =
     TextStyle(color: Colors.black87, fontSize: 17.0, fontFamily: 'Oxygen');
 TextStyle headStyle =
-    TextStyle(color: Colors.blueGrey, fontFamily: 'Oxygen', fontSize: 15.0);
+    TextStyle(color: Colors.blueGrey, fontFamily: 'Oxygen', fontSize: 16.0);
+TextStyle genericStyle = TextStyle(fontSize: 15.0);
 
 /*FirebaseUser user = Network().user;
 
@@ -32,7 +34,7 @@ class ProfileCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                height: 450.0,
+                height: 420.0,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -46,7 +48,7 @@ class ProfileCard extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 30.0,
+                      height: 60.0,
                     ),
                     CircleAvatar(
                       backgroundImage:
@@ -56,10 +58,17 @@ class ProfileCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 24.0, horizontal: 8.0),
-                      child: Text(
-                        snapshot.data['username'],
-                        style: nameStyle,
-                        overflow: TextOverflow.fade,
+                      child: InkWell(
+                        child: Text(
+                          snapshot.data['name'],
+                          style: nameStyle,
+                          overflow: TextOverflow.fade,
+                        ),
+                        onTap: () async {
+                          if (await canLaunch("https://github.com/" + snapshot.data['username'])) {
+                            await launch("https://github.com/" + snapshot.data['username']);
+                          }
+                        },
                       ),
                     ),
                     Padding(
@@ -144,7 +153,7 @@ class ProfileCard extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text("Repos: "),
+                                      Text("Repos: ", style: genericStyle,),
                                       Text(
                                         snapshot.data['repos'].toString(),
                                         style: aboutStyle,
@@ -153,7 +162,11 @@ class ProfileCard extends StatelessWidget {
                                         width: 20,
                                       ),
                                       Text(
-                                        "Compatibility ${snapshot.compatibility}",
+                                        "Compatibility Index: ",
+                                        style: genericStyle,
+                                      ),
+                                      Text(
+                                        snapshot.compatibility,
                                         style: aboutStyle,
                                       ),
                                     ],
