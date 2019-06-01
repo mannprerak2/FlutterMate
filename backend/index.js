@@ -149,7 +149,7 @@ app.post('/signup', async (req, res) => {
 const getCompatibilityScore = (yourScore, myScore) => {
     let temp = (yourScore - myScore) / myScore;
     temp = 1 / temp;
-    temp = temp.toFixed(2);
+    temp = temp.toFixed(4)*10;
     if (temp < 0)
         return temp*-1;
     return temp;
@@ -159,8 +159,8 @@ const getCompatibilityScore = (yourScore, myScore) => {
 const getData = async (userScore, uid) => {
     console.log("Fetching data");
     let result = [];
-    const first = await userCollection.where('score', '>=', userScore).limit(3);    
-    const second = await userCollection.where('score', '<=', userScore).limit(3);
+    const first = await userCollection.where('score', '>=', userScore);   
+    const second = await userCollection.where('score', '<=', userScore);
 
     return new Promise(
         async (resolve, reject) => {
@@ -177,6 +177,7 @@ const getData = async (userScore, uid) => {
         }
     ).then(
         async result => {
+            console.log("First result", result);
             const secondSnap = await second.get();
             await secondSnap.forEach(
                 doc => {
@@ -190,7 +191,7 @@ const getData = async (userScore, uid) => {
         }
     ).then(
         result => {
-            console.log(result);
+            console.log("Final result", result);
             return result;
         }
     );
