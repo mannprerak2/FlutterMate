@@ -48,13 +48,17 @@ class _MyAppState extends State<MyApp> {
   }
 
   void proceedToProfile(String code) async {
+    //show loading bar and block user
+    _showLoading();
     bool p = await Network().loginWithGitHub(code);
+    // remove loading bar
+    navKey.currentState.pop();
 
     if (p) {
       navKey.currentState.pushReplacementNamed("/profile");
     } else {
       showDialog(
-          context: navKey.currentState.context,
+          context: StartScreen.popContext,
           builder: (context) {
             return AlertDialog(
                 content: Text("Some Server Error Occured, Please Try Again"));
@@ -69,6 +73,21 @@ class _MyAppState extends State<MyApp> {
       _subs.cancel();
       _subs = null;
     }
+  }
+
+  void _showLoading() {
+    showDialog(
+        context: StartScreen.popContext,
+        barrierDismissible: false,
+        builder: (context) {
+          // stop back button pop
+          return WillPopScope(
+            onWillPop: () => Future<bool>.value(false),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        });
   }
 
   @override
