@@ -3,6 +3,7 @@ import 'package:flutter_mate/ProfileCard.dart';
 import 'package:flutter_mate/network.dart';
 import 'package:flutter_mate/usermodel.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Feed extends StatefulWidget {
   @override
@@ -62,6 +63,12 @@ class _FeedState extends State<Feed> {
     } else if (status == 2) {
       return Scaffold(
         body: Swiper(
+          onTap: (i) async {
+            User snapshot = users[i];
+            if (await canLaunch("https://github.com/" + snapshot.data['username'])) {
+              await launch("https://github.com/" + snapshot.data['username']);
+              }
+            },
           autoplay: false,
           loop: false,
           itemCount: users.length,

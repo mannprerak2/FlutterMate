@@ -135,10 +135,10 @@ class _ProfileState extends State<Profile> {
                                     padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 4.0),
                                     child: Center(
                                       child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: <Widget>[
-                                          Text("Repos: "),
+                                          Text("Repositories "),
                                           Text(snapshot.data['repos'].toString(), style: aboutStyle,),
-
                                         ],
                                       ),
                                     ),
