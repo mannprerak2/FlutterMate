@@ -5,6 +5,6 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         data: json,
-        compatibility: json['compatibility'].toString(),
+        compatibility: json['compatibilty'].toString(),
       );
 }

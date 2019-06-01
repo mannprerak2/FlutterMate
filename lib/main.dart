@@ -97,6 +97,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navKey,
+      debugShowCheckedModeBanner: false,
       title: 'FlutterMate',
       theme: ThemeData(
         primarySwatch: Colors.blue,

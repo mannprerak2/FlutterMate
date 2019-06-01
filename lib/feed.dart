@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mate/ProfileCard.dart';
 import 'package:flutter_mate/network.dart';
 import 'package:flutter_mate/usermodel.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -61,9 +62,11 @@ class _FeedState extends State<Feed> {
     } else if (status == 2) {
       return Scaffold(
         body: Swiper(
+          autoplay: false,
+          loop: false,
           itemCount: users.length,
           itemBuilder: (context, i) {
-            return Text("a");
+            return ProfileCard(users[i]);
           },
           pagination: SwiperPagination(),
           control: SwiperControl(),

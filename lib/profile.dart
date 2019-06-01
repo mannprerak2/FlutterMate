@@ -158,7 +158,7 @@ class _ProfileState extends State<Profile> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.search),
           onPressed: () {
-            MyApp.navKeyStat.currentState.pushReplacementNamed('/feed');
+            MyApp.navKeyStat.currentState.pushNamed('/feed');
           }
          )
         ,
