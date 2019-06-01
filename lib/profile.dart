@@ -45,7 +45,7 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      height: 400.0,
+                      height: 450.0,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -67,8 +67,9 @@ class _ProfileState extends State<Profile> {
                               children: <Widget>[
                                 Text("Your Profile", style: headStyle,),
                                 Spacer(),
-                                IconButton(icon: Icon(Icons.settings), onPressed: () {},),
+                                IconButton(icon: Icon(Icons.power_settings_new), onPressed: () {
 
+                                },),
                               ],
                             ),
                           ),
@@ -81,9 +82,30 @@ class _ProfileState extends State<Profile> {
                             child: Text(githubName, style: nameStyle, overflow: TextOverflow.fade,),
                           ),
                           Padding(
-
                             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                            child: Text(snapshot.data['username'], style: usernameStyle,),
+                            child: Text(snapshot.data['username'].toString(), style: usernameStyle,),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Text("Followers", style: headStyle,),
+                                    Text(snapshot.data['followers'].toString(), style: headStyle,),
+                                  ],
+                                ),
+                                Text("|", style: TextStyle(fontSize: 24.0, color: Colors.blueGrey[300]),),
+                                Column(
+                                  children: <Widget>[
+                                    Text("Following", style: headStyle,),
+                                    Text(snapshot.data['following'].toString(), style: headStyle,),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -95,14 +117,32 @@ class _ProfileState extends State<Profile> {
                           child: Container(
                             decoration: BoxDecoration(
                               //boxShadow: Box,
-
                               borderRadius: BorderRadius.all(Radius.circular(16.0)),
                             ),
                             height: 300,
                             width: 340,
                             child: Padding(
-                              padding: const EdgeInsets.all(26.0),
-                              child: Text("About", style: aboutStyle,),
+                              padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 2.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 4.0),
+                                    child: Text(snapshot.data['bio'], style: aboutStyle,),
+                                  ),
+                                  Divider(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 4.0),
+                                    child: Center(
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text("Repos: "),
+                                          Text(snapshot.data['repos'].toString(), style: aboutStyle,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ),
                           ),
                         ),
