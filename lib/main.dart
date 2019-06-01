@@ -12,6 +12,7 @@ import 'package:flutter_mate/profile.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
+  static GlobalKey<NavigatorState> navKeyStat;
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -25,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     _initDeepLinkListener();
     super.initState();
+    MyApp.navKeyStat = navKey;
   }
 
   @override
