@@ -11,7 +11,8 @@ TextStyle usernameStyle =
 TextStyle aboutStyle =
     TextStyle(color: Colors.black87, fontSize: 17.0, fontFamily: 'Oxygen');
 TextStyle headStyle =
-    TextStyle(color: Colors.blueGrey, fontFamily: 'Oxygen', fontSize: 15.0);
+    TextStyle(color: Colors.blueGrey, fontFamily: 'Oxygen', fontSize: 16.0);
+TextStyle genericStyle = TextStyle(fontSize: 15.0);
 
 /*FirebaseUser user = Network().user;
 
@@ -32,7 +33,7 @@ class ProfileCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                height: 450.0,
+                height: 420.0,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -46,7 +47,7 @@ class ProfileCard extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 30.0,
+                      height: 60.0,
                     ),
                     CircleAvatar(
                       backgroundImage:
@@ -144,7 +145,7 @@ class ProfileCard extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text("Repos: "),
+                                      Text("Repos: ", style: genericStyle,),
                                       Text(
                                         snapshot.data['repos'].toString(),
                                         style: aboutStyle,
@@ -153,7 +154,11 @@ class ProfileCard extends StatelessWidget {
                                         width: 20,
                                       ),
                                       Text(
-                                        "Compatibility ${snapshot.compatibility}",
+                                        "Compatibility Index: ",
+                                        style: genericStyle,
+                                      ),
+                                      Text(
+                                        snapshot.compatibility,
                                         style: aboutStyle,
                                       ),
                                     ],
