@@ -4,6 +4,7 @@ import 'package:flutter_mate/github-model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Network {
   static final Network _singleton = Network._internal();
@@ -32,7 +33,6 @@ class Network {
         code: code,
       )),
     );
-
     GitHubLoginResponse loginResponse =
         GitHubLoginResponse.fromJson(json.decode(response.body));
 
@@ -64,5 +64,11 @@ class Network {
     } else {
       return false;
     }
+  }
+
+  void getUsername() async {
+    String username = await Firestore.instance.collection('users')
+        .document(user.uid)
+        .collection('github').toString();
   }
 }
