@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mate/constants.dart';
+import 'package:flutter_mate/feed.dart';
 import 'package:flutter_mate/start_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uni_links/uni_links.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_mate/profile.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
+  static GlobalKey<NavigatorState> navKeyStat;
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -24,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     _initDeepLinkListener();
     super.initState();
+    MyApp.navKeyStat = navKey;
   }
 
   @override
@@ -94,6 +97,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navKey,
+      debugShowCheckedModeBanner: false,
       title: 'FlutterMate',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -101,6 +105,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (context) => StartScreen(),
         '/profile': (context) => Profile(),
+        '/feed': (context) => Feed()
       },
     );
   }
