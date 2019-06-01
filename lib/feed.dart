@@ -63,7 +63,7 @@ class _FeedState extends State<Feed> {
         body: Swiper(
           itemCount: users.length,
           itemBuilder: (context, i) {
-            return Text(users[i].toString());
+            return Text("a");
           },
           pagination: SwiperPagination(),
           control: SwiperControl(),

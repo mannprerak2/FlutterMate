@@ -72,8 +72,9 @@ class Network {
       "authorisation": await user.getIdToken(),
     });
 
-    List<User> users = (json.decode(response.body) as List)
-        .map((userJson) => User.fromJson(userJson));
+    Iterable l = json.decode(response.body);
+    List<User> users = l.map((model) => User.fromJson(model)).toList();
+
 
     return users;
   }
