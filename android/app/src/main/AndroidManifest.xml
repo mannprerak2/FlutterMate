@@ -34,7 +34,7 @@
     <category android:name="android.intent.category.BROWSABLE" />
     <data
         android:host="auth"
-        android:scheme="appname" />
+        android:scheme="fluttermate" />
 </intent-filter>
         </activity>
     </application>
