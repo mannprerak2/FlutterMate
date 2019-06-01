@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_mate/constants.dart';
 import 'package:flutter_mate/github-model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_mate/usermodel.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -57,7 +58,7 @@ class Network {
     print("sent post to server");
     print("===========================");
     print("===========================");
-      print(serverResponse.statusCode);
+    print(serverResponse.statusCode);
 
     if (serverResponse.statusCode == 200) {
       return true;
@@ -66,9 +67,14 @@ class Network {
     }
   }
 
-  void getUsername() async {
-    String username = await Firestore.instance.collection('users')
-        .document(user.uid)
-        .collection('github').toString();
+  Future<List<User>> getFeed() async {
+    final response = await http.get(serverId + "/team", headers: {
+      "authorisation": await user.getIdToken(),
+    });
+
+    List<User> users = (json.decode(response.body) as List)
+        .map((userJson) => User.fromJson(userJson));
+
+    return users;
   }
 }
