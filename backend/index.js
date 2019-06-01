@@ -149,6 +149,7 @@ app.post('/signup', async (req, res) => {
 const getCompatibilityScore = (yourScore, myScore) => {
     let temp = (yourScore - myScore) / myScore;
     temp = 1 / temp;
+    temp = temp.toFixed(2);
     if (temp < 0)
         return temp*-1;
     return temp;
@@ -156,6 +157,7 @@ const getCompatibilityScore = (yourScore, myScore) => {
 
 // Util function to get data
 const getData = async (userScore, uid) => {
+    console.log("Fetching data");
     let result = [];
     const first = await userCollection.where('score', '>=', userScore).limit(3);    
     const second = await userCollection.where('score', '<=', userScore).limit(3);
@@ -187,7 +189,10 @@ const getData = async (userScore, uid) => {
             return result;
         }
     ).then(
-        result => result
+        result => {
+            console.log(result);
+            return result;
+        }
     );
 }
 
@@ -197,7 +202,6 @@ app.get('/team', async (req, res) => {
 
     const foundUser = await userCollection.doc(`${uid}`).get();
     if (!foundUser.exists) {
-        console.log(foundUser.data());
         return res.code(403);
     } else {
         return await getData(foundUser.data().score, uid);
