@@ -20,7 +20,7 @@ class Profile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
                     child: Row(
-
+                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         Text("Your Profile"),
                         IconButton(icon: Icon(Icons.settings), onPressed: () {},),
