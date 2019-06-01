@@ -9,7 +9,7 @@ import 'package:flutter_mate/profile.dart';
 
 void main() => runApp(Profile());
 
-class MyApp extends StatefulWidget {
+/*class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       String code = link.substring(link.indexOf(RegExp('code=')) + 5);
       Network().loginWithGitHub(code).then((firebaseUser) {
         print("LOGGED IN AS: " + firebaseUser.displayName);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+
       }).catchError((e) {
         print("LOGIN ERROR: " + e.toString());
       });
@@ -90,4 +90,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
+}*/
