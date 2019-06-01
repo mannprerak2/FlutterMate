@@ -18,7 +18,7 @@ class Network {
 
   Network._internal();
 
-  Future<FirebaseUser> loginWithGitHub(String code) async {
+  Future<bool> loginWithGitHub(String code) async {
     print("called loginWithGithub");
     //ACCESS TOKEN REQUEST
     final response = await http.post(
@@ -52,14 +52,17 @@ class Network {
     print("===========================");
     print("=====FIREBASE LOGIN========");
     print(user.providerData.toString());
-    await http.post(serverId + "/signup", headers: {
+    final serverResponse = await http.post(serverId + "/signup", headers: {
       "authorisation": await user.getIdToken(),
     });
-
     print("sent post to server");
     print("===========================");
     print("===========================");
 
-    return user;
+    if (serverResponse.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
